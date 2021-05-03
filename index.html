@@ -9,8 +9,54 @@
 </head>
 <body>
     
-    <div class="menu_container">Formatting</div>
-    <div class="formula_container">Formula</div>
+    <div class="menu_container">
+        <div class="formatting_container">
+            <div class="subgroup">
+                <div class="font_family_container">
+                    <select name="fonts" id="font_family" class="font_family">
+                        <option value="Arial">Font-1</option>
+                        <option value="Cambria">Font-2</option>
+                        <option value="Georgia">Font-3</option>
+                        <option value="monospace">Font-4</option>
+                        <option value="sans_serif">Font-5</option>
+                        <option value="fantasy">Font-6</option>
+                    </select>
+                </div>
+                <div class="bui_container">
+                    <input type="button" value="B" class="bold">
+                    <input type="button" value="I" class="italic">
+                    <input type="button" value="U" class="underline">
+                </div>
+            </div>
+            <div class="subgroup">
+                <div class="font_size_container">
+                    <select name="fonts" id="font_size" class="font_size">
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="12">12</option>
+                        <option value="16">16</option>
+                        <option value="20">20</option>
+                        <option value="32">32</option>
+                    </select>
+                </div>
+                <div class="colour_container">
+                    <input type="color" id="color">
+                    <input type="color" id="bg-color">
+                </div>
+            </div>
+        </div>
+        <div class="alignment_container">
+            <input type="button" value="L" class="left">
+            <input type="button" value="C" class="center">
+            <input type="button" value="R" class="right">
+        </div>
+
+    </div>
+    <div class="formula_container">
+        <input type="text" class="address_box">
+        <div class="separator">:</div>
+        <input type="text" class="formula_box">
+    </div>
     <div class="grid">
         <div class="top-left-box"></div>
         
