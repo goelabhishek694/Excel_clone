@@ -18,10 +18,10 @@ function addSheet(e){
     newSheet.addEventListener("click",handleActiveSheet);
 }
 
-function handleActiveSheet(e){
-    let mySheet=e.currentTarget;
-    let ele=document.querySelector(".active_sheet");
-    ele.classList.remove("active_sheet");
-    mySheet.classList.add("active_sheet");
+// function handleActiveSheet(e){
+//     let mySheet=e.currentTarget;
+//     let ele=document.querySelector(".active_sheet");
+//     ele.classList.remove("active_sheet");
+//     mySheet.classList.add("active_sheet");
 
-}
+// }
