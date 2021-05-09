@@ -18,10 +18,12 @@ leftCol.innerHTML=str;
 let grid=document.querySelector(".grid");
 str="";
 for(let i=0;i<100;i++){
-
+        str+=`<div class="row">`
     for(let j=0;j<26;j++){
-
+        str+=`<div class="col" rid="${i}" cid="${j}" contentEditable="true"></div>`
     }
-
+    str+=`</div>`;
 }
+grid.innerHTML=str;
+
 
