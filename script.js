@@ -11,6 +11,8 @@ let underlineBtn=document.querySelector(".underline");
 let fontSizeOption=document.querySelector(".font_size");
 let textColor=document.querySelector("#text_color");
 let bgColor=document.querySelector("#bg_color");
+let textAlignment=document.querySelectorAll(".alignment_container>*");
+console.log(textAlignment);
 
 // console.log(allCells.length);  ->2600
 firstSheet.addEventListener("click",handleActiveSheet);
@@ -62,7 +64,6 @@ fontFamily.addEventListener("change",function(){
     cell.style.fontFamily=selectedFont;
 
 })
-
 boldBtn.addEventListener("click",function(){
     let isActive=boldBtn.classList.contains("active_btn");
     let address=addressBox.value;
@@ -113,23 +114,40 @@ fontSizeOption.addEventListener("change",function(){
     cell.style.fontSize= selectedfontSize+"px";
 })
 textColor.addEventListener("change",function(){
-    
+    let address=addressBox.value;
+    let {colId,rowId}=getRIdCIdfromAddress(address);
+    let cell=document.querySelector(`.col[rid="${rowId}"][cid="${colId}"]`);
+    cell.style.color=textColor.value;
 })
+bgColor.addEventListener("change",function(){
+    
+    let address=addressBox.value;
+    let {colId,rowId}=getRIdCIdfromAddress(address);
+    console.log(colId,rowId);
+    let cell=document.querySelector(`.col[rid="${rowId}"][cid="${colId}"]`);
+    cell.style.backgroundColor=bgColor.value;
+})
+for(let i=0;i<textAlignment.length;i++){
+    textAlignment[i].addEventListener("click",function(){
+        
+    })
+}
+
 
 
 
 
 function getRIdCIdfromAddress(address){
-    let add=address.split("");
-    let colId=parseInt(add[0].charCodeAt()-65);
-    let rowId=parseInt(add[1])-1;
+    let colId=parseInt(address.charCodeAt(0)-65);
+    let rowId=address.slice(1);
+    rowId=(Number(rowId));
     // console.log(typeof(colId));
-    // console.log(colId,rowId);
+    // console.log("from func",colId,rowId);
     return {colId,rowId};
 }
 
 
-
+ 
 
 
 
