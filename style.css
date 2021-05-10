@@ -165,7 +165,7 @@ body{
 .row{
     display: flex;
 }
-.col{
+.top_col{
     min-width: 80px;
     border-right: 1px solid gray;
     max-width:80px;
@@ -173,6 +173,19 @@ body{
     min-height: 30px;
     text-align: center;
     padding-top: 5px;
+    /* font-size: 10px; */
+}
+.col{
+    
+    min-width: 80px;
+    border-right: 1px solid gray;
+    max-width:80px;
+    border: 1px solid;
+    min-height: 30px;
+    text-align: center;
+    padding-top: 5px;
+    font-size: 10px;
+    text-align: left;
 }
 .left_col{
     width: 25px;

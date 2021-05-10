@@ -2,7 +2,7 @@
 let topRow=document.querySelector(".top_row");
 let str="";
 for(let i=0;i<26;i++){
-    str+=`<div class="col">${String.fromCharCode(65+i)}</div>`
+    str+=`<div class="top_col">${String.fromCharCode(65+i)}</div>`
 }
 topRow.innerHTML=str;
 
@@ -25,5 +25,26 @@ for(let i=0;i<100;i++){
     str+=`</div>`;
 }
 grid.innerHTML=str;
+let sheetDB=[];
+for(let i=0;i<100;i++){
+    let row=[];
+    for(let j=0;j<26;j++){
+        let cell={
+            bold: false,
+            italic: "normal",
+            underline: "none",
+            font_family: "Arial",
+            fontSize: "10",
+            halign: "left",
+            tcolor:"#000000",
+            bgcolor:"#ffffff",
+            value: "",
+            children: [],
+            formula: ""
+        }
+        row.push(cell);
+    }
+    sheetDB.push(row);
+}
 
 
