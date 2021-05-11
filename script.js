@@ -13,6 +13,7 @@ let allFontSize=document.querySelectorAll(".font_size>*")
 let textColor=document.querySelector("#text_color");
 let bgColor=document.querySelector("#bg_color");
 let textAlignment=document.querySelectorAll(".alignment_container>*");
+let sheetDB=workSheetDB[0];
 let formulaBox=document.querySelector(".formula_box");
 // console.log(textAlignment[0]);
 
@@ -25,11 +26,19 @@ function addSheet(e){
     let lastSheet=sheetsArr[sheetsArr.length-1];
     let newSheet=document.createElement("div");
     newSheet.setAttribute("class" , "sheet");
-    let idx=lastSheet.getAttribute("sheetIdx");
-    idx=parseInt(idx);
-    newSheet.innerText=`Sheet ${idx+2}`;
-    newSheet.setAttribute("sheetIdx",idx+1);
+    let lastSheetidx=lastSheet.getAttribute("sheetIdx");
+    lastSheetidx=parseInt(lastSheetidx);
+    newSheet.innerText=`Sheet ${lastSheetidx+2}`;
+    newSheet.setAttribute("sheetIdx",lastSheetidx+1);
     sheetList.appendChild(newSheet);
+    sheetsArr.forEach(function(sheet){
+        sheet.classList.remove("active_sheet");
+    })
+    sheetsArr=document.querySelectorAll(".sheet");
+    sheetsArr[sheetsArr.length-1].classList.add("active_sheet");
+
+    initCurrentSheetDb();
+    sheetDB=workSheetDB[lastSheetidx+1];
 
     newSheet.addEventListener("click",handleActiveSheet);
 }
@@ -39,7 +48,10 @@ function handleActiveSheet(e){
     let ele=document.querySelector(".active_sheet");
     ele.classList.remove("active_sheet");
     mySheet.classList.add("active_sheet");
-
+    let idx=mySheet.getAttribute("sheetIdx");
+    idx=parseInt(idx);
+    sheetDB=workSheetDB[idx];
+    // setUI(sheetDB);
 }
 
 for(let i=0;i<allCells.length;i++){

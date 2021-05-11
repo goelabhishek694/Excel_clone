@@ -25,26 +25,31 @@ for(let i=0;i<100;i++){
     str+=`</div>`;
 }
 grid.innerHTML=str;
-let sheetDB=[];
-for(let i=0;i<100;i++){
-    let row=[];
-    for(let j=0;j<26;j++){
-        let cell={
-            bold: false,
-            italic: "normal",
-            underline: "none",
-            font_family: "Arial",
-            fontSize: "10",
-            halign: "left",
-            tcolor:"#000000",
-            bgcolor:"#ffffff",
-            value: "",
-            children: [],
-            formula: ""
+let workSheetDB=[];
+function initCurrentSheetDb(){
+    let sheetDB=[];
+    for(let i=0;i<100;i++){
+        let row=[];
+        for(let j=0;j<26;j++){
+            let cell={
+                bold: false,
+                italic: "normal",
+                underline: "none",
+                font_family: "Arial",
+                fontSize: "10",
+                halign: "left",
+                tcolor:"#000000",
+                bgcolor:"#ffffff",
+                value: "",
+                children: [],
+                formula: ""
+            }
+            row.push(cell);
         }
-        row.push(cell);
+        sheetDB.push(row);
     }
-    sheetDB.push(row);
+    workSheetDB.push(sheetDB);
 }
+initCurrentSheetDb();
 
 
