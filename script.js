@@ -39,6 +39,9 @@ function addSheet(e){
 
     initCurrentSheetDb();
     sheetDB=workSheetDB[lastSheetidx+1];
+    // as soon as new sheet is added we have to set it at default settings that is default bui font font size bdcolor tcolor value etc. 
+    // so we use initui function to initialise our cells UI when someone adds new sheet , this we do so that we do not see data from previous sheets and a fresh sheet is presented to us.
+    initUI();
 
     newSheet.addEventListener("click",handleActiveSheet);
 }
@@ -51,15 +54,14 @@ function handleActiveSheet(e){
     let idx=mySheet.getAttribute("sheetIdx");
     idx=parseInt(idx);
     sheetDB=workSheetDB[idx];
-    // setUI(sheetDB);
+    setUI(sheetDB);
 }
 
 for(let i=0;i<allCells.length;i++){
     allCells[i].addEventListener("click",function(){
         let rid=parseInt(allCells[i].getAttribute("rid"));
         let cid=parseInt(allCells[i].getAttribute("cid"));
-        let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
-        
+        addressBox.value=`${String.fromCharCode(cid+65)}${rid+1}`;
         let cellObject=sheetDB[rid][cid];
         // console.log(cellObject);
         
@@ -254,6 +256,58 @@ for(let i=0;i<textAlignment.length;i++){
         }
     })
 }
+
+function initUI(){
+    for(let i=0;i<allCells.length;i++){
+        allCells[i].style.fontWeight = "normal";
+        allCells[i].style.fontStyle = "normal";
+        allCells[i].style.textDecoration = "none";
+        allCells[i].style.fontFamily = "Arial";
+        allCells[i].style.fontSize = "10px";
+        allCells[i].style.textAlign = "left";
+        allCells[i].style.color = "#000000",
+        allCells[i].style.backgroundColor = "#ffffff";
+        allCells[i].innerText = "";
+    }
+}
+
+function setUI(sheetDB){
+    for(let i=0;i<allCells.length;i++){
+        let rid=parseInt(allCells[i].getAttribute("rid"));
+        let cid=parseInt(allCells[i].getAttribute("cid"));
+        // console.log(rid,cid);
+        let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+
+        let {bold,italic,underline,font_family,fontSize,halign,tcolor,bgcolor,value,children,formula}=sheetDB[rid][cid];
+
+        cell.style.fontWeight=(bold==true)?"bold":"normal";
+        cell.style.fontStyle=(italic=="normal")?"normal":"italic";
+        cell.style.textDecoration=(underline=="none")?"none":"underline";
+        cell.style.fontFamily=font_family;
+        cell.style.fontSize=fontSize+"px";
+        cell.style.color=tcolor;
+        cell.style.backgroundColor=bgcolor;
+        cell.innerText=value;
+    }
+}
+
+// function setUI(sheetDB) {
+//     for (let i = 0; i < sheetDB.length; i++) {
+//         for (let j = 0; j < sheetDB[i].length; j++) {
+//             let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
+//             let {bold,italic,underline,font_family,fontSize,halign,tcolor,bgcolor,value,children,formula}=sheetDB[i][j];
+//             cell.style.fontWeight = bold == true ? "bold" : "normal";
+//             cell.style.fontStyle=(italic=="normal")?"normal":"italic";
+//             cell.style.textDecoration=(underline=="none")?"none":"underline";
+//             cell.style.fontFamily=font_family;
+//             cell.style.fontSize=fontSize+"px";
+//             cell.style.color=tcolor;
+//             cell.style.backgroundColor=bgcolor;
+//             cell.innerText=value;
+//             // cell.innerText = value;
+//         }
+//     }
+// }
 
 
 
