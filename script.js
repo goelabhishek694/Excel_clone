@@ -333,9 +333,21 @@ function getRIdCIdfromAddress(address){
 
 // **************Formula Container code**************
 
-// formulaBox.addEventListener("keydown",function(e){
-//     if(e.key=="Enter" && formulaBox.value!=""){
-//         let formula=formulaBox.value;
+formulaBox.addEventListener("keydown",function(e){
+    if(e.key=="Enter" && formulaBox.value!=""){
+        let formula=formulaBox.value;
+        // let cell
+        let value=evaluate(formula);
 
-//     }
-// })
+
+    }
+})
+
+function evaluate(formula){
+    let formulaTokens=formula.split(" ");
+    for(let i=0;i<formulaTokens;i++){
+        let char=formulaTokens[i].charCodeAt(0);
+        
+    }
+
+}
