@@ -325,7 +325,12 @@ for(let i=0;i<allCells.length;i++){
         let value=allCells[i].innerText;
         // console.log(value);
         let cellObject=sheetDB[rid][cid];
+        if(cellObject.value==value) return;
         cellObject.value=value;
+        if(cellObject.formula!=""){
+            removeFormula(cellObject);
+        }
+        
         changeChildren(cellObject);
         // let add
     })
@@ -337,17 +342,26 @@ for(let i=0;i<allCells.length;i++){
 
 formulaBox.addEventListener("keydown",function(e){
     if(e.key=="Enter" && formulaBox.value!=""){
+        let address=addressBox.value;
+        let {rowId,colId}=getRIdCIdfromAddress(address);
+        let cellObject=sheetDB[rowId][colId];
+        let prevFormula=cellObject.formula;
         let formula=formulaBox.value;
+
+        if(prevFormula!="" && prevFormula!=formula){
+            removeFormula(cellObject);
+        }
+        else if(prevFormula==formula) return;
         // get ans from formula
         let evaluatedValue=evaluate(formula);
 
-        let address=addressBox.value;
-        let {rowId,colId}=getRIdCIdfromAddress(address);
+        
         // set the ans on UI 
         setUIByFormula(evaluatedValue,rowId,colId);
 
         //set ans,formula in db and children to their parent
         setContentInDB(evaluatedValue,formula,rowId,colId,address);
+        changeChildren(cellObject);
     }
 })
 
@@ -356,16 +370,16 @@ function evaluate(formula){
     for(let i=0;i<formulaTokens.length;i++){
         let char=formulaTokens[i].charCodeAt(0);
         if(char>=65 && char<=90){
-            console.log("inside if");
+            // console.log("inside if");
             let{colId,rowId}=getRIdCIdfromAddress(formulaTokens[i]);
-            console.log(formulaTokens[i],colId,rowId);
+            // console.log(formulaTokens[i],colId,rowId);
             let cellObject=sheetDB[rowId][colId];
             let {value}=cellObject;
-            console.log(value);
+            // console.log(value);
             formula=formula.replace(formulaTokens[i],value);
         }
     }
-    console.log(formula);
+    // console.log(formula);
     let ans=eval(formula);
     return ans;
 }
@@ -400,9 +414,36 @@ function changeChildren(cellObject){
         let formula=childObj.formula;
         let evaluatedValue=evaluate(formula);
         setUIByFormula(evaluatedValue,childRidCid.rowId,childRidCid.colId);
-        setContentInDB(evaluatedValue,formula,childRidCid.rowId,childRidCid.colId,children[i]);
+        childObj.value=evaluatedValue;
+        // setContentInDB(evaluatedValue,formula,childRidCid.rowId,childRidCid.colId,children[i]);
         changeChildren(childObj);
     }
+}
+
+function removeFormula(cellObject){
+    let address=addressBox.value;
+    let formula=cellObject.formula;
+    let formulaTokens=formula.split(" ");
+    for(let i=0;i<formulaTokens.length;i++){
+        let char=formulaTokens[i].charCodeAt(0);
+        if(char>=65 && char<=90){
+            // console.log("inside if");
+            let parentRidCid=getRIdCIdfromAddress(formulaTokens[i]);
+            // console.log(formulaTokens[i],colId,rowId);
+            let parentObject=sheetDB[parentRidCid.rowId][parentRidCid.colId];
+            let children=parentObject.children;
+            let idx=children.indexOf(address);
+            children.splice(idx,1);
+        }
+    }
+    let{rowId,colId}=getRIdCIdfromAddress(address);
+    let cell=document.querySelector(`.col[rid="${rowId}"][cid="${colId}"]`);
+    cell.formula="";
+    cellObject.formula="";
+    console.log(cellObject);
+
+
+
 }
 
 //*********************helper function*********************
