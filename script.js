@@ -257,6 +257,8 @@ for(let i=0;i<textAlignment.length;i++){
     })
 }
 
+
+
 function initUI(){
     for(let i=0;i<allCells.length;i++){
         allCells[i].style.fontWeight = "normal";
@@ -307,27 +309,27 @@ function setUI(sheetDB){
 //             // cell.innerText = value;
 //         }
 //     }
-// }
+
+//} 
 
 
-
-
-
-
-
-function getRIdCIdfromAddress(address){
-    let colId=parseInt(address.charCodeAt(0)-65);
-    let rowId=address.slice(1);
-    rowId=(Number(rowId))-1;
-    // console.log(typeof(colId));
-    // console.log("from func",colId,rowId);
-    return {colId,rowId};
-}
 
 
  
 
-
+// setting value of cell in db
+for(let i=0;i<allCells.length;i++){
+    allCells[i].addEventListener("blur",function(){
+        let rid=allCells[i].getAttribute("rid");
+        let cid=allCells[i].getAttribute("cid");
+        let value=allCells[i].innerText;
+        // console.log(value);
+        let cellObject=sheetDB[rid][cid];
+        cellObject.value=value;
+        changeChildren(cellObject);
+        // let add
+    })
+}
 
 
 
@@ -336,18 +338,80 @@ function getRIdCIdfromAddress(address){
 formulaBox.addEventListener("keydown",function(e){
     if(e.key=="Enter" && formulaBox.value!=""){
         let formula=formulaBox.value;
-        // let cell
-        let value=evaluate(formula);
+        // get ans from formula
+        let evaluatedValue=evaluate(formula);
 
+        let address=addressBox.value;
+        let {rowId,colId}=getRIdCIdfromAddress(address);
+        // set the ans on UI 
+        setUIByFormula(evaluatedValue,rowId,colId);
 
+        //set ans,formula in db and children to their parent
+        setContentInDB(evaluatedValue,formula,rowId,colId,address);
     }
 })
 
 function evaluate(formula){
     let formulaTokens=formula.split(" ");
-    for(let i=0;i<formulaTokens;i++){
+    for(let i=0;i<formulaTokens.length;i++){
         let char=formulaTokens[i].charCodeAt(0);
-        
+        if(char>=65 && char<=90){
+            console.log("inside if");
+            let{colId,rowId}=getRIdCIdfromAddress(formulaTokens[i]);
+            console.log(formulaTokens[i],colId,rowId);
+            let cellObject=sheetDB[rowId][colId];
+            let {value}=cellObject;
+            console.log(value);
+            formula=formula.replace(formulaTokens[i],value);
+        }
     }
+    console.log(formula);
+    let ans=eval(formula);
+    return ans;
+}
 
+function setUIByFormula(evaluatedValue,rid,cid){
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    cell.innerText=evaluatedValue;
+}
+
+function setContentInDB(evaluatedValue,formula,rid,cid,address){
+    let cellObject=sheetDB[rid][cid];
+    cellObject.value=evaluatedValue;
+    cellObject.formula=formula;
+
+    let formulaTokens=formula.split(" ");
+    //[(, A1, +, A2,)]
+    for(let i=0;i<formulaTokens.length;i++){
+        let char=formulaTokens[i].charCodeAt(0);
+        if(char>=65 && char<=90){
+            let parentAddress=getRIdCIdfromAddress(formulaTokens[i]);
+            let cellObject=sheetDB[parentAddress.rowId][parentAddress.colId];
+            cellObject.children.push(address);
+        }
+    }
+}
+
+function changeChildren(cellObject){
+    let children=cellObject.children;
+    for(let i=0;i<children.length;i++){
+        let childRidCid=getRIdCIdfromAddress(children[i]);
+        let childObj=sheetDB[childRidCid.rowId][childRidCid.colId];
+        let formula=childObj.formula;
+        let evaluatedValue=evaluate(formula);
+        setUIByFormula(evaluatedValue,childRidCid.rowId,childRidCid.colId);
+        setContentInDB(evaluatedValue,formula,childRidCid.rowId,childRidCid.colId,children[i]);
+        changeChildren(childObj);
+    }
+}
+
+//*********************helper function*********************
+
+function getRIdCIdfromAddress(address){
+    let colId=parseInt(address.charCodeAt(0)-65);
+    let rowId=address.slice(1);
+    rowId=(Number(rowId))-1;
+    // console.log(typeof(colId));
+    // console.log("from func",colId,rowId);
+    return {colId,rowId};
 }
