@@ -1,219 +1,82 @@
-*{
+* {
     box-sizing: border-box;
-    
 }
-body{
+body {
+    padding: 0;
     margin: 0;
 }
-.active_btn{
-    background-color: rgb(138, 138, 138);
-}
-.menu_container{
-    height: 80px;
-    background-color: aqua;
-    display: flex;
-}
-.menu_container>*{
-    height: 80%;
-    width: 31%;
-    border-right: 1px solid rgb(87, 86, 86);
-}
-.formatting_container{
-    /* height: 80%; */
-    /* width:300px; */
-    /* border: 2px solid red; */
-    display: flex;
-    justify-content: space-around;
-    /* align-items:baseline */
-}
-.subgroup{
-    display: flex;
-    flex-direction: column;
-    justify-content:space-evenly;
-    width: 45%;
-    height: 100%;
-}
 
-.subgroup>*{
-    width: 100%;
-}
-.font_family{
-    width:100%;
-}
-.bui_container{
+.page-actions-cont {
+    height: 3rem;
+    background-color: #218c74;;
     display: flex;
-    justify-content: space-between;
+    align-items: flex-end;
+    padding-left: 1rem;
 }
-.bui_container>*{
-    width: 30%;
+.page-action {
+    margin: 0.5rem;
+    color: #f1f2f6;
 }
-#font_size{
-    width:100%;
-}
-.colour_container{
+.cellprop-actions-cont {
+    height: 3rem;
+    background-color: #ecf0f1;
     display: flex;
-    /* flex-direction: column; */
-    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
 }
-.colour_container>*{
-    width: 45%;
+.cellprop-actions-cont > * {
+    display: inline-block;
+    margin-right: 1rem;
 }
-.alignment_container{
+.cellprop-actions-cont > select {
+    border: none;
+    border-radius: 2px;
+    outline: none;
+}
+.font-family-prop {
+    padding: 0.2rem;
+}
+.font-size-prop {
+    padding: 0.2rem;
+}
+.formula-actions-cont {
+    height: 2rem;
+    background-color: #ecf0f1;
+    padding-left: 1rem;
     display: flex;
-    
-    justify-content: center;
     align-items: center;
 }
-.alignment_container>*{
-    width: 25%;
+.formula-actions-cont > * {
+    display: inline-block;
+    margin-right: 0.7rem;
 }
-
-/* ******************************************** */
-/* formula bar css */
-.formula_container{
-    height: 30px;
-    background-color: lightblue;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
+.formula-icon {
+    width: 1.2rem; 
 }
-.address_box{
-    width:10%;
-}
-/* .separator{
-    width: 2%;
-} */
-.formula_box{
-    width: 80%;
-}
-
-
-
-
-/* ******************************************** */
-/* adding and toggling sheets, sheet bar ui */
-
-.sheets{
-    
-    background-color: rgb(184, 197, 184);
-    height: 50px;
-    display:flex;
-}
- .add_sheet_container{
-    height: 80%;
-    min-width:40px;
-    /* border: 0.1rem solid red; */
-    
-
-    display: flex;
-    padding-top: 10px;
-    justify-content: center;
-    align-items: center;
-} 
-.icon{
-    font-size: 1.2rem;
-    color:rgb(5, 184, 5);
-    
-}
-.sheets_list{
-    /*mychange*/
-    overflow: auto;
-    height: 80%;
-    /* width:100%; */
-    /* margin-left: 1rem; */
-    display: flex;
-    padding-top: 10px;
-
-}
-.sheet{
-    /* border: 1px solid red; */
-    /* border-left: 1px solid gray; */
-    border-right: 1px solid gray;
-    border-left: 1px solid gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*mychange*/
-    min-width: 90px;
-    /* overflow-y: scroll; */
-}
-.active_sheet{
-    background-color: aliceblue;
-}
-
-
-
-/************************ grid container css *************************************/
-.top_left_box{
-    height: 30px;
-    width: 25px;
-    background-color: gray;
-    /* margin: 0; */
-}
-.top_row{
-    /* margin: 0; */
-    /* width: 100%; */
-    height: 30px;
-    background-color: lightgreen;
-    position: absolute;
-    display: flex;
-    top: 0px;
-    left: 25px
-    
-}
-.row{
-    display: flex;
-}
-.top_col{
-    min-width: 80px;
-    border-right: 1px solid gray;
-    max-width:80px;
-    border: 1px solid;
-    min-height: 30px;
+.address-bar {
+    width: 5rem;
     text-align: center;
-    padding-top: 5px;
-    /* font-size: 10px; */
 }
-.col{
-    
-    min-width: 80px;
-    border-right: 1px solid gray;
-    max-width:80px;
-    border: 1px solid;
-    min-height: 30px;
-    text-align: center;
-    padding-top: 5px;
-    font-size: 10px;
-    text-align: left;
+.formula-bar {
+    width: calc( 100vw - 5rem - 0.7rem - 0.7rem - 0.7rem );
 }
-.left_col{
-    width: 25px;
+.formula-actions-cont > input {
+    border: none;
+    outline: none;
+    height: 70%;
 }
-.left_col_box{
-    height:30px;
-    width: 25px;
-    border:1px solid black ;
-    background-color: lightgreen;
-    text-align: center;
-    padding-top:5px;
+.sheet-actions-cont {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    gap: 1rem;
+    background-color: #ecf0f1;
 }
-.grid_container{
-    height: calc( 100vh - ( 80px + 30px + 50px ));
-    position:relative;
-    overflow: auto;
+.sheet-actions-cont > * {
+    display: inline-block;
 }
-.grid{
-    position: absolute;
-    top: 30px;
-    left: 25px;
+.sheet-add-icon {
+    width: 2vw;
 }
-
-
-
-
-
-
-
-
-
