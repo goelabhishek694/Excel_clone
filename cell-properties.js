@@ -599,7 +599,7 @@ function addListenerToAttachCellProperties(cell) {
         let [rid, cid] = decodeRIDCIDFromAddress(address);
         let cellProp = sheetDB[rid][cid];
 
-        // Apply cell Properties
+        // Applying cell formatting Properties
         cell.style.fontWeight = cellProp.bold ? "bold" : "normal";
         cell.style.fontStyle = cellProp.italic ? "italic" : "normal";
         cell.style.textDecoration = cellProp.underline ? "underline" : "none";
@@ -643,6 +643,7 @@ function addListenerToAttachCellProperties(cell) {
 }
 
 function activecell(address) {
+    //destrucutiring to get rid, cid 
     let [rid, cid] = decodeRIDCIDFromAddress(address);
     // Access cell & storage object
     let cell = document.querySelector(`.cell[rid="${rid}"][cid="${cid}"]`);
